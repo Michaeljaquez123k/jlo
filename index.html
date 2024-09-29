@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cajero Automático</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Cajero Automático</h1>
+        <p id="saldo">Saldo actual: 20000 pesos</p>
+
+        <button onclick="consultarSaldo()">Consultar Saldo</button>
+        <button onclick="mostrarFormularioDeposito()">Depositar Dinero</button>
+        <button onclick="mostrarFormularioRetiro()">Retirar Dinero</button>
+        <button onclick="salir()">Salir</button>
+
+        <!-- Formularios para depositar y retirar dinero -->
+        <div id="depositar" style="display: none;">
+            <h3>Depositar Dinero</h3>
+            <input type="number" id="deposito" placeholder="Cantidad a depositar">
+            <button onclick="depositarDinero()">Confirmar Depósito</button>
+        </div>
+
+        <div id="retirar" style="display: none;">
+            <h3>Retirar Dinero</h3>
+            <input type="number" id="retiro" placeholder="Cantidad a retirar">
+            <button onclick="retirarDinero()">Confirmar Retiro</button>
+        </div>
+    </div>
+
+    <script>
+        // Saldo inicial
+        let saldo = 20000;
+
+        // Función para consultar saldo
+        function consultarSaldo() {
+            alert("Su saldo actual es: " + saldo + " pesos.");
+        }
+
+        // Mostrar formulario de depósito
+        function mostrarFormularioDeposito() {
+            document.getElementById('depositar').style.display = 'block';
+            document.getElementById('retirar').style.display = 'none';
+        }
+
+        // Función para depositar dinero
+        function depositarDinero() {
+            let cantidad = parseFloat(document.getElementById('deposito').value);
+            if (cantidad > 0) {
+                saldo += cantidad;
+                document.getElementById('saldo').textContent = "Saldo actual: " + saldo + " pesos";
+                alert("Has depositado " + cantidad + " pesos. Tu nuevo saldo es: " + saldo + " pesos.");
+                document.getElementById('deposito').value = '';
+                document.getElementById('depositar').style.display = 'none';
+            } else {
+                alert("Por favor, ingresa una cantidad válida.");
+            }
+        }
+
+        // Mostrar formulario de retiro
+        function mostrarFormularioRetiro() {
+            document.getElementById('retirar').style.display = 'block';
+            document.getElementById('depositar').style.display = 'none';
+        }
+
+        // Función para retirar dinero
+        function retirarDinero() {
+            let cantidad = parseFloat(document.getElementById('retiro').value);
+            if (cantidad > 0 && cantidad <= saldo) {
+                saldo -= cantidad;
+                document.getElementById('saldo').textContent = "Saldo actual: " + saldo + " pesos";
+                alert("Has retirado " + cantidad + " pesos. Tu nuevo saldo es: " + saldo + " pesos.");
+                document.getElementById('retiro').value = '';
+                document.getElementById('retirar').style.display = 'none';
+            } else if (cantidad > saldo) {
+                alert("Saldo insuficiente. No puedes retirar más de lo que tienes.");
+            } else {
+                alert("Por favor, ingresa una cantidad válida.");
+            }
+        }
+
+        // Función para salir
+        function salir() {
+            alert("Gracias por usar el cajero automático. ¡Adiós!");
+        }
+    </script>
+
+</body>
+</html>
